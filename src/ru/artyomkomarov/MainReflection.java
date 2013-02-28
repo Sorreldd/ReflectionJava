@@ -5,34 +5,32 @@ import java.lang.reflect.Method;
 public class MainReflection {
 	public static void main(String[] args) {
 		try {
-			Class c = Class.forName("carpack.Car"); //Загружаем 2 класса по имени
+			Class c = Class.forName("carpack.Car"); //Р—Р°РіСЂСѓР¶Р°РµРј РґРІР° РєР»Р°СЃСЃР° РїРѕ РёРјРµРЅРё
 			Class wl = Class.forName("carpack.Car$Wheel");
-			
-			Object maserati = c.newInstance(); //Создаем экземпляр класса Car, делаем все это динамически с помощью newInstance
+			Object maserati = c.newInstance(); //РЎРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РєР»Р°СЃСЃР° Car СЃ РїРѕРјРѕС‰СЊСЋ newInstance
 			/*
-			 	Так мы можем находить имена методов у класса
-			 	и создать массив методов
+			 	С‚Р°Рє РјРѕР¶РµРј РІС‹РІРµСЃС‚Рё РЅР°Р·РІР°РЅРёСЏ РјРµС‚РѕРґРѕРІ Сѓ РєР»Р°СЃСЃР° c
 				Method[] m = c.getMethods();
 				for(int i = 0; i < m.length; i++)
 					System.out.println(m[i].getName());
 			*/
-			Method isPumpedUp = wl.getMethod("isPumpedUp"); // Зная имена методов класса, можем получить их по отдельности
+			Method isPumpedUp = wl.getMethod("isPumpedUp"); // РџРѕР»СѓС‡РёРј РјРµС‚РѕРґС‹ РєР»Р°СЃСЃР° РїРѕ РѕС‚РґРµР»СЊРЅРѕСЃС‚Рё, РёСЃРїРѕР»СЊР·СѓСЏ РёРјРµРЅР° РјРµС‚РѕРґРѕРІ
 			Method pumpUp = wl.getMethod("pumpUp");
 			Method getWheels = c.getMethod("getWheels");
 			Method isLightsOn = c.getMethod("isLightsOn");
 			Method switchLights = c.getMethod("switchLights");
 			Method startDriving = c.getMethod("startDriving", int.class);
-			Object[] wheels = (Object[]) getWheels.invoke(maserati); // Создадим массив колес, чтобы проверить их и накачать
-			if((boolean)isLightsOn.invoke(maserati) == false) 
-				switchLights.invoke(maserati);
-			for(int i = 0; i < wheels.length; i++) { //циклом проходим каждое колесо
-				if((boolean)isPumpedUp.invoke(wheels[i]) == false) { // проверяем накачано ли колесо
-					pumpUp.invoke(wheels[i]); // накачачиваем
+			Object[] wheels = (Object[]) getWheels.invoke(maserati); // РЎРѕР·РґР°РґРёРј РјР°СЃСЃРёРІ РєРѕР»РµСЃ
+			if((boolean)isLightsOn.invoke(maserati) == false) // РїСЂРѕРІРµСЂСЏРµРј РІРєР»СЋС‡РµРЅС‹ Р»Рё С„Р°СЂС‹
+				switchLights.invoke(maserati); // РІРєР»СЋС‡Р°РµРј
+			for(int i = 0; i < wheels.length; i++) { // РџСЂРѕР№РґРµРј РЅР°С€ РјР°СЃСЃРёРІ РєРѕР»РµСЃ С†РёРєР»РѕРј
+				if((boolean)isPumpedUp.invoke(wheels[i]) == false) { // РїСЂРѕРІРµСЂСЏРµРј РЅР°РєР°С‡Р°РЅРѕ Р»Рё РєРѕР»РµСЃРѕ
+					pumpUp.invoke(wheels[i]); // РЅР°РєР°С‡РёРІР°РµРј
 				}
 			}
-			startDriving.invoke(maserati, 60); // пытаемся поехать!
+			startDriving.invoke(maserati, 60); // РџС‹С‚Р°РµРјСЃСЏ РїРѕРµС…Р°С‚СЊ СЃРѕ СЃРєРѕСЂРѕСЃС‚СЊСЋ 60 mph
 		} catch (Exception e) {
-			System.out.print("NOOO"); //обрабатываем исключения, если в ходе работы программы появился exception сработает catch и выведется "NOOO"
+			System.out.print("NOOO"); // Р•СЃР»Рё РЅР° СЌС‚Р°РїРµ РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕРіСЂР°РјРјС‹ РїРѕР»СѓС‡РёРј Exception, С‚Рѕ РІС‹РІРµРґРµС‚СЃСЏ NOOO
 		}
 	}
 }
