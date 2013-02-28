@@ -23,8 +23,8 @@ public class MainReflection {
 			Method switchLights = c.getMethod("switchLights");
 			Method startDriving = c.getMethod("startDriving", int.class);
 			Object[] wheels = (Object[]) getWheels.invoke(maserati); // Создадим массив колес, чтобы проверить их и накачать
-			isLightsOn.invoke(maserati); // аналогично получим методы класса Wheel
-			switchLights.invoke(maserati);
+			if((boolean)isLightsOn.invoke(maserati) == false) 
+				switchLights.invoke(maserati);
 			for(int i = 0; i < wheels.length; i++) { //циклом проходим каждое колесо
 				if((boolean)isPumpedUp.invoke(wheels[i]) == false) { // проверяем накачано ли колесо
 					pumpUp.invoke(wheels[i]); // накачачиваем
